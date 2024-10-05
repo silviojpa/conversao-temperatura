@@ -18,6 +18,9 @@ COPY . .
 EXPOSE 3000
 CMD ["node", "index.js"]
 
+----
+Entendendo o Dockerfile:
+
 1. FROM node:22.6.0:
 Significado: Indica que a imagem será criada com base na imagem oficial do Node.js na versão 22.6.0. Essa imagem base já vem com o Node.js pré-instalado e outras ferramentas essenciais.
 2. WORKDIR /app:
@@ -33,16 +36,6 @@ Significado: Indica que a porta 3000 dentro do container estará disponível par
 7. CMD ["node", "server.js"]:
 Significado: Define o comando padrão que será executado quando um container for iniciado a partir dessa imagem. Neste caso, o comando node server.js inicia seu servidor Node.js.
 
-Entendendo o Dockerfile:
-
-FROM node:18-alpine: Define a imagem base.
-WORKDIR /app: Define o diretório de trabalho dentro do container.
-COPY package*.json ./: Copia os arquivos package.json e package-lock.json para o diretório de trabalho.
-RUN npm install: Instala as dependências do projeto.
-COPY . .: Copia o restante do projeto para o container.
-EXPOSE 3000: Indica que a porta 3000 do container estará disponível para conexões externas.
-CMD ["node", "index.js"]: Define o comando a ser executado quando o container iniciar.
-Construir a Imagem:
 
 Abra o terminal e navegue até o diretório onde está o Dockerfile.
 Execute o comando:
