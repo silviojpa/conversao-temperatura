@@ -1,0 +1,27 @@
+# --- Seção do Deployment ---
+# O Deployment gerencia um conjunto de Pods e garante que eles estejam sempre em execução.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Nome do Deployment.
+  name: conversao-temperatura-deployment
+spec:
+  # Define que o Kubernetes deve manter 3 réplicas (Pods) da sua aplicação.
+  replicas: 3
+  selector:
+    matchLabels:
+      app: conversao-temperatura
+  template:
+    metadata:
+      labels:
+        # Rótulo usado pelo Deployment e pelo Service para encontrar os Pods.
+        app: conversao-temperatura
+    spec:
+      containers:
+        - name: conversao-temperatura-container
+          # A sua imagem do Docker Hub. Lembre-se de substituir o nome do usuário, se necessário.
+          image: silvio69luiz/conversao-temperatura:v1
+          # A porta que o container expõe.
+          ports:
+            - containerPort: 8080
+
