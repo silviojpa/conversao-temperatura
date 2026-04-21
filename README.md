@@ -167,3 +167,14 @@ Criar o Túnel de Acesso (Port-Forward):
 
 Bash
 kubectl port-forward -n monitoring service/monitoramento-grafana 3000:80
+
+🗑️ Como Remover a Stack
+Para limpar o ambiente e remover todos os recursos instalados:
+# Desinstalar via Helm
+helm uninstall monitoramento -n monitoring
+
+# Remover o namespace
+kubectl delete namespace monitoring
+
+# Remover os CRDs (Custom Resource Definitions)
+- kubectl delete crd alertmanagerconfigs.monitoring.coreos.com alertmanagers.monitoring.coreos.com podmonitors.monitoring.coreos.com probes.monitoring.coreos.com prometheuses.monitoring.coreos.com prometheusrules.monitoring.coreos.com servicemonitors.monitoring.coreos.com
