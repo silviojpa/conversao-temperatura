@@ -88,3 +88,82 @@ Recursos Adicionais:
 Documentação oficial do Docker: https://docs.docker.com/
 Tutorial DigitalOcean: [URL inválido removido]
 Com este guia, você estará pronto para criar e gerenciar suas aplicações Node.js utilizando Docker.
+
+instalação do Helm:
+
+Entendendo os componentes:
+Helm: É o "Instalador de Aplicativos" do Kubernetes. Sem ele, você teria que criar dezenas de arquivos YAML manualmente.
+
+Prometheus: O banco de dados que armazena as métricas (o "cérebro" do monitoramento).
+
+Grafana: A interface visual que transforma os dados do Prometheus em gráficos bonitos.
+
+Passo a Passo Detalhado
+1. Instalação do Helm
+O comando baixa o script oficial de instalação e o executa no seu Ubuntu.
+
+Bash
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+2. Adição dos Repositórios
+O Helm precisa saber "onde buscar" os pacotes do Prometheus.
+
+Bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+3. Instalação da Stack (Kube-Prometheus-Stack)
+Este comando instala o Prometheus e o Grafana já configurados para conversar entre si.
+
+Bash
+kubectl create namespace monitoring
+helm install monitoramento prometheus-community/kube-prometheus-stack -n monitoring
+4. Acesso ao Grafana
+Por padrão, o serviço é do tipo ClusterIP. Usamos o port-forward para mapear a porta do cluster para o seu navegador no Windows.
+
+Bash
+kubectl port-forward -n monitoring service/monitoramento-grafana 3000:80
+Conteúdo para o seu arquivo README.md
+Abaixo está o texto formatado. Você pode criar um arquivo chamado MONITORAMENTO.md no seu repositório projeto-devops-fase-2.
+
+# 📊 Monitoramento de Cluster Kubernetes (Prometheus & Grafana)
+
+Este guia descreve o processo de instalação e configuração da stack de monitoramento utilizando Helm em um ambiente Kubernetes (Minikube/WSL2).
+
+## 🛠️ Pré-requisitos
+- Cluster Kubernetes rodando (Minikube).
+- `kubectl` configurado.
+
+## 🚀 Passo a Passo
+
+### 1. Instalar o Helm
+O Helm é o gerenciador de pacotes para Kubernetes. Ele facilita a implantação de aplicações complexas.
+```bash
+curl [https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3](https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3) | bash
+````
+
+2. Configurar Repositórios do Helm
+Adicionamos o repositório da comunidade que mantém as imagens oficiais do Prometheus.
+# Adiciona o repositório
+helm repo add prometheus-community [https://prometheus-community.github.io/helm-charts](https://prometheus-community.github.io/helm-charts)
+
+# Atualiza a lista de pacotes locais
+helm repo update
+
+3. Instalar Kube-Prometheus-Stack
+Utilizamos um "Chart" completo que já instala Prometheus, Grafana e Alertmanager em um único comando.
+
+# Criar um namespace isolado para organização
+kubectl create namespace monitoring
+
+# Instalar a stack
+helm install monitoramento prometheus-community/kube-prometheus-stack -n monitoring
+
+4. Acessar o Painel do Grafana
+O Grafana é instalado com o tipo de serviço ClusterIP. Para acessar do navegador local:
+
+Obter a senha do usuário admin:
+kubectl get secret --namespace monitoring monitoramento-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+Criar o Túnel de Acesso (Port-Forward):
+
+Bash
+kubectl port-forward -n monitoring service/monitoramento-grafana 3000:80
