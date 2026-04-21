@@ -89,7 +89,7 @@ Documentação oficial do Docker: https://docs.docker.com/
 Tutorial DigitalOcean: [URL inválido removido]
 Com este guia, você estará pronto para criar e gerenciar suas aplicações Node.js utilizando Docker.
 
-instalação do Helm:
+## instalação do Helm:
 
 Entendendo os componentes:
 Helm: É o "Instalador de Aplicativos" do Kubernetes. Sem ele, você teria que criar dezenas de arquivos YAML manualmente.
